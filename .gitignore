@@ -3,7 +3,6 @@
 
 data/*
 !/data/Info/
-
 synthetic/
 impute/
 workspace/
@@ -11,3 +10,6 @@ debug/
 tabdiff/result/
 
 **/ckpt/*
+.python-version
+pyproject.toml
+wandb/

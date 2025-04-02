@@ -187,7 +187,7 @@ def train_val_test_split(data_df, cat_columns, num_train = 0, num_test = 0):
         train_df = data_df.loc[train_idx]
         test_df = data_df.loc[test_idx]
 
-
+        print(train_df.columns)
 
         flag = 0
         for i in cat_columns:

@@ -1,24 +1,8 @@
 {
     "name": "adult",
     "task_type": "binclass",
-    "header": null,
-    "column_names": [
-        "age",
-        "workclass",
-        "fnlwgt",
-        "education",
-        "education.num",
-        "marital.status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "capital.gain",
-        "capital.loss",
-        "hours.per.week",
-        "native.country",
-        "income"
-    ],
+    "header": "infer",
+    "column_names": null,
     "num_col_idx": [
         0,
         2,
@@ -41,26 +25,7 @@
         14
     ],
     "file_type": "csv",
-    "data_path": "data/adult/adult.data",
-    "val_path": null,
-    "test_path": "data/adult/adult.test",
-    "column_info": {
-        "age": "float",
-        "workclass": "str",
-        "fnlwgt": "float",
-        "education": "str",
-        "education.num": "float",
-        "marital.status": "str",
-        "occupation": "str",
-        "relationship": "str",
-        "race": "str",
-        "sex": "str",
-        "capital.gain": "float",
-        "capital.loss": "float",
-        "hours.per.week": "float",
-        "native.country": "str",
-        "income": "str"
-    },
-    "train_num": 32561,
-    "test_num": 16281
+    "data_path": "data/adult/adult.csv",
+    "test_path": null,
+    "val_path": null
 }
