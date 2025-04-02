@@ -1,0 +1,11 @@
+column_name,house_or_indiv,NaProcess,type,note,"According to the parameter description of the word document, determine the type of variable, how to deal with missing values",AggUrlTract,AggUrlCountry,LocalName,Unnamed: 9,Can use?,Change?,Docx tables and aggregated data excel
+SERIALNO,h,no,ignore,,,NO,NO,NO,,NO,NO,
+TEN,h,0,categorical,,,https://data.census.gov/table/ACSDT5Y2021.B25003?t=Owner/Renter%20(Tenure)&g=050XX00US10005$1400000&y=2021,TODO,TEN,,YES,YES,
+HINCP,h,0,numeric,0??????. use ADJINC,,"https://data.census.gov/table/ACSST5Y2021.S2503?t=Income+(Households,+Families,+Individuals)&g=050XX00US10005$1400000&y=2021",TODO,HINCP,,YES,YES,
+HHL,h,0,categorical,,,https://data.census.gov/table/ACSDT5Y2021.C16002?t=Language%20Spoken%20at%20Home&g=050XX00US10005$1400000&y=2021,TODO,HHL,,YES,YES,
+VEH,h,0,categorical,,,https://data.census.gov/table/ACSDT5Y2021.B08201?q=vehicl&g=050XX00US10005$1400000,TODO,VEH,,YES,YES,
+,,,,,,,,,,,,
+SERIALNO,i,no,ignore,,,NO,NO,NO,,NO,NO,
+AGEP,i,no,numeric,,,https://data.census.gov/table?t=Age+and+Sex&g=050XX00US10005$1400000&y=2021,TODO,AGEP,,YES,???????????????????????,
+SEX,i,no,categorical,,,https://data.census.gov/table/ACSDP5Y2021.DP05?g=050XX00US10005$1400000&y=2021,TODO,SEX,,YES,NO,
+SCHL,i,0,categorical,,,https://data.census.gov/table/ACSDT5Y2021.B06009?t=Educational%20Attainment&g=050XX00US10005$1400000&y=2021,TODO,SCHL,,YES,AGEP <25 set SCHL 0. ??????,

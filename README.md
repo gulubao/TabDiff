@@ -11,6 +11,7 @@ source .venv/bin/activate
 
 # Install dependencies
 uv pip install -r requirements.txt
+uv add polars
 ```
 
 # 下载数据
@@ -55,6 +56,12 @@ Finally, run the following command to process your dataset:
 python process_dataset.py --dataname adult
 ```
 
+对于我们的 acs 数据集，
+
+```bash
+python process_dataset_acs.py --dataname de # de, nc
+```
+
 ## 训练 TabDiff
 
 
@@ -72,3 +79,14 @@ Wanb logging is enabled by default. To disable it and log locally, add the ```--
 To disable the learnable noise schedules, add the ```--non_learnable_schedule```. Please note that in order for the code to test/sample from such model properly, you need to add this flag for all commands below.
 
 To specify your own experiment name, which will be used for logging and saving files, add ```--exp_name <your experiment name>```. This flag overwrites the default experiment name (learnable_schedule/non_learnable_schedule), so, similar to ```--non_learnable_schedule```, once added to training, you need to add it to all following commands as well.
+
+## Sampling and Evaluating TabDiff (Density, MLE, C2ST)
+
+To sample synthetic tables from trained TabDiff models and evaluate them, run
+
+```bash
+# python main.py --dataname <NAME_OF_DATASET> --mode test --report --no_wandb
+python main.py --dataname adult --mode test --report --no_wandb
+```
+
+This will sample 20 synthetic tables randomly. Meanwhile, it will evaluate the density, mle, and c2st scores for each sample and report their average and standard deviation. The results will be printed out in the terminal, and the samples and detailed evaluation results will be placed in ./eval/report_runs/<EXP_NAME>/<NAME_OF_DATASET>/.

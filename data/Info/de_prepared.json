@@ -1,0 +1,12 @@
+{
+    "name": "de_prepared",
+    "task_type": "binclass", # binclass or regression
+    "header": "infer",
+    "column_names": null,
+    "num_col_idx": [LIST],  # list of indices of numerical columns
+    "cat_col_idx": [LIST],  # list of indices of categorical columns
+    "target_col_idx": [list], # list of indices of the target columns (for MLE)
+    "file_type": "csv",
+    "data_path": "data/de_prepared.csv",
+    "test_path": null,
+}
