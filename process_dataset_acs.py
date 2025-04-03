@@ -160,9 +160,12 @@ def combineCore(dfHouse, dfPerson, windowSize, varLenHouse, varLenPerson):
 
 # -------------------------------------------------------
 
-def get_column_name_mapping(data_df, num_col_idx, cat_col_idx):
-    column_names = np.array(data_df.columns.tolist())
+def get_column_name_mapping(data_df, num_col_idx, cat_col_idx, target_col_idx, column_names = None):
     
+    if not column_names:
+        column_names = np.array(data_df.columns.tolist())
+    
+
     idx_mapping = {}
 
     curr_num_idx = 0
@@ -305,7 +308,6 @@ if __name__ == "__main__":
     if "SEX" in indiv_df.columns:
         indiv_df['SEX'] = indiv_df['SEX'].astype(int)
 
-    
     dfHouse = pl.from_pandas(house_df)
     dfPerson = pl.from_pandas(indiv_df)
 
@@ -322,12 +324,11 @@ if __name__ == "__main__":
 
     data_df = pd.DataFrame(data_df, columns=column_names)
     data_df = data_df.drop('H_NP', axis=1)
-    column_names = data_df.columns.tolist()
     
     # # -------------------------------------------------------------
     # 再次按照 tabdiff 的格式处理数据
     name = f"{name}_prepared"
-    info = {}
+    info = {"task_type": "binclass"}
 
     interest_type = interest_df.loc[:, ["column_name", "house_or_indiv", "type"]]
     house_interest_type = interest_type[interest_type["house_or_indiv"] == 'h'].drop('house_or_indiv', axis=1).query("column_name != 'SERIALNO'").reset_index(drop=True)
@@ -372,7 +373,12 @@ if __name__ == "__main__":
     num_col_idx = [data_df.columns.get_loc(col) for col in num_columns]
     cat_col_idx = [data_df.columns.get_loc(col) for col in cat_columns]
 
-    idx_mapping, inverse_idx_mapping, idx_name_mapping = get_column_name_mapping(data_df, num_col_idx, cat_col_idx  )
+    # 使用一个 fake target column
+    data_df["TARGET"] = 1
+    target_col_idx = [data_df.columns.get_loc("TARGET")]
+    target_columns = ["TARGET"]
+    column_names = data_df.columns.tolist()
+    idx_mapping, inverse_idx_mapping, idx_name_mapping = get_column_name_mapping(data_df, num_col_idx, cat_col_idx, target_col_idx, column_names)
 
     name_idx_mapping = {val: key for key, val in idx_name_mapping.items()}
 
@@ -419,24 +425,40 @@ if __name__ == "__main__":
 
     X_num_train = data_df[num_columns].to_numpy().astype(np.float32)
     X_cat_train = data_df[cat_columns].to_numpy()
+    y_train = data_df[target_columns].to_numpy()
+    
+    test_df = data_df.sample(n=10, random_state=42)
+    X_num_test = test_df[num_columns].to_numpy().astype(np.float32)
+    X_cat_test = test_df[cat_columns].to_numpy()
+    y_test = test_df[target_columns].to_numpy()
 
     save_dir = f'data/{name}'
     np.save(f'{save_dir}/X_num_train.npy', X_num_train)
     np.save(f'{save_dir}/X_cat_train.npy', X_cat_train)
+    np.save(f'{save_dir}/y_train.npy', y_train)
+
+    np.save(f'{save_dir}/X_num_test.npy', X_num_test)
+    np.save(f'{save_dir}/X_cat_test.npy', X_cat_test)
+    np.save(f'{save_dir}/y_test.npy', y_test)
 
     data_df[num_columns] = data_df[num_columns].astype(np.float32)
     data_df.to_csv(f'{save_dir}/train.csv', index = False)
+
+    test_df[num_columns] = test_df[num_columns].astype(np.float32)
+    test_df.to_csv(f'{save_dir}/test.csv', index = False)
 
     if not os.path.exists(f'synthetic/{name}'):
         os.makedirs(f'synthetic/{name}')
     
     data_df.to_csv(f'synthetic/{name}/real.csv', index = False)
+    test_df.to_csv(f'synthetic/{name}/test.csv', index = False)
 
     print('Numerical', X_num_train.shape)
     print('Categorical', X_cat_train.shape)
 
     info['column_names'] = column_names
     info['train_num'] = data_df.shape[0]
+    info['test_num'] = test_df.shape[0]
 
     info['idx_mapping'] = idx_mapping
     info['inverse_idx_mapping'] = inverse_idx_mapping
@@ -463,6 +485,7 @@ if __name__ == "__main__":
     print(name)
     print('Total', info['train_num'])
     print('Train', info['train_num'])
+    print('Test', info['test_num'])
     cat = len(cat_col_idx)
     num = len(num_col_idx)
     print('Num', num)

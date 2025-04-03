@@ -69,7 +69,7 @@ To train an unconditional TabDiff model across the entire table, run
 
 ```bash
 # python main.py --dataname <NAME_OF_DATASET> --mode train
-python main.py --dataname adult --mode train
+python main.py --dataname de_prepared --mode train
 ```
 
 Current Options of ```<NAME_OF_DATASET>``` are: adult, default, shoppers, magic, beijing, news
