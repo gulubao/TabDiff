@@ -280,9 +280,10 @@ def main(args):
         config_save_path = raw_config['model_save_path']
         with open (os.path.join(config_save_path, 'config.pkl'), 'wb') as f:
             pickle.dump(raw_config, f)
+        print("Running initial evaluation before training...")
+        trainer.test()  # Evaluate once before training
+        print("Starting training loop...")
         trainer.run_loop()
-
-
 
 if __name__ == '__main__':
 
