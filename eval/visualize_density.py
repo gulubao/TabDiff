@@ -56,6 +56,10 @@ def plot_density(syn_data, real_data, info, num_per_row=3):
         # So, we perturb one entry of the cont data by a small amount
             print(f"\n ALERT: the generated samples column_{i} with name '{col}' all has the same value of {syn_data[col][0]} \n")
             syn_data[col][0] += 1e-5
+        if plot_type == 'distplot' and (real_data[col][0] == real_data[col]).all():     # to tackle a very weird bug 
+            print(f"\n ALERT: the real data column_{i} with name '{col}' all has the same value of {real_data[col][0]} \n")
+            real_data[col][0] += 1e-5
+
         fig = get_column_plot(
             real_data=real_data,
             synthetic_data=syn_data,

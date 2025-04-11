@@ -26,6 +26,27 @@
                 "--mode",
                 "train"
             ],
+            "console": "integratedTerminal",
+            "autoReload": {
+                "enable": true,
+                "reloadOnChange": true,
+                "reloadOnSave": true
+            },
+            "justMyCode": true
+        },
+        {
+            "name": "sample and evaluate delaware",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "args": [
+                "--dataname",
+                "de_prepared",
+                "--mode",
+                "test",
+                "--report",
+                "--no_wandb"
+            ],
             "console": "integratedTerminal"
         }
     ]

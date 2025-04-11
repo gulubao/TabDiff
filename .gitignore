@@ -13,5 +13,5 @@ tabdiff/result/
 .python-version
 pyproject.toml
 wandb/
-eval/
 uv.lock
+

@@ -86,7 +86,7 @@ To sample synthetic tables from trained TabDiff models and evaluate them, run
 
 ```bash
 # python main.py --dataname <NAME_OF_DATASET> --mode test --report --no_wandb
-python main.py --dataname adult --mode test --report --no_wandb
+python main.py --dataname de_prepared --mode test --report --no_wandb
 ```
 
 This will sample 20 synthetic tables randomly. Meanwhile, it will evaluate the density, mle, and c2st scores for each sample and report their average and standard deviation. The results will be printed out in the terminal, and the samples and detailed evaluation results will be placed in ./eval/report_runs/<EXP_NAME>/<NAME_OF_DATASET>/.
